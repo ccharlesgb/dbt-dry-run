@@ -1,5 +1,12 @@
 ## Changelog
 
+# dbt-dry-run v0.10.0
+
+## Improvements
+
+- Limited support for materialized views. Due to BigQuery dry-run limitations for materialized views, only SQL syntax validation is supported.
+  Schema change validation is not supported.
+
 # dbt-dry-run v0.9.1
 
 ## Bugfixes

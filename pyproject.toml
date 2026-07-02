@@ -1,6 +1,6 @@
 [project]
 name = "dbt-dry-run"
-version = "0.9.1"
+version = "0.10.0"
 description = "Dry run dbt projects"
 authors = [
   { name = "Connor Charles", email = "connor.charles@autotrader.co.uk" },
@@ -11,6 +11,7 @@ authors = [
   { name = "Shu Wang", email = "shu.wang@autotrader.co.uk" },
   { name = "Evie Crutchley", email = "evie.crutchley@autotrader.co.uk" },
   { name = "Stevie Woods", email = "steven.woods@autotrader.co.uk" },
+  { name = "Sien Figoureux", email = "sien.figoureux@autotrader.co.uk" },
 ]
 readme = "README.md"
 license = "Apache-2.0"
