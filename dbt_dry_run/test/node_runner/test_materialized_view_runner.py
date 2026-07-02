@@ -7,12 +7,8 @@ from dbt_dry_run.models.report import DryRunStatus
 from dbt_dry_run.node_runner.materialized_view_runner import MaterializedViewRunner
 from dbt_dry_run.results import Results
 from dbt_dry_run.scheduler import ManifestScheduler
-from dbt_dry_run.sql.literals import enable_test_example_values
 from dbt_dry_run.test.utils import SimpleNode, get_executed_sql, A_SQL_QUERY
 
-enable_test_example_values(True)
-
-VIEW_CREATION_SQL = "CREATE OR REPLACE VIEW"
 
 A_SIMPLE_TABLE = Table(
     fields=[
@@ -48,7 +44,7 @@ def test_model_as_materialized_view_run_sql_query() -> None:
     assert result.table.fields[0].name == A_SIMPLE_TABLE.fields[0].name
 
     executed_sql = get_executed_sql(mock_sql_runner)
-    assert executed_sql.startswith(A_SQL_QUERY)
+    assert executed_sql == A_SQL_QUERY
     assert node.compiled_code in executed_sql
 
 
