@@ -23,6 +23,7 @@ A_SIMPLE_TABLE = Table(
     ]
 )
 
+
 def test_model_as_materialized_view_run_sql_query() -> None:
     mock_sql_runner = MagicMock()
     mock_sql_runner.query.return_value = (
@@ -43,6 +44,7 @@ def test_model_as_materialized_view_run_sql_query() -> None:
     result = model_runner.run(node)
 
     assert result.status == DryRunStatus.SUCCESS
+    assert result.table
     assert result.table.fields[0].name == A_SIMPLE_TABLE.fields[0].name
 
     executed_sql = get_executed_sql(mock_sql_runner)
