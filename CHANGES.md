@@ -1,5 +1,11 @@
 ## Changelog
 
+# dbt-dry-run v0.10.2
+
+## Bugfixes
+
+- Parse `--vars` using YAML instead of JSON so less strict YAML inputs are accepted while JSON-style quoting still works.
+
 # dbt-dry-run v0.10.1
 
 ## Under The Hood
