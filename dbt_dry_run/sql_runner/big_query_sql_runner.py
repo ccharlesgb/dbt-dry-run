@@ -73,7 +73,11 @@ class BigQuerySQLRunner(SQLRunner):
         table = None
         client = self._project.get_client()
         try:
-            query_job = client.query(sql, job_config=self.JOB_CONFIG)
+            query_job = client.query(
+                sql,
+                job_config=self.JOB_CONFIG,
+                timeout=self._project.job_creation_timeout_seconds,
+            )
             table = self.get_schema_from_schema_fields(query_job.schema or [])
             status = DryRunStatus.SUCCESS
         except (Forbidden, BadRequest, NotFound) as e:

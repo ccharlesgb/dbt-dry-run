@@ -27,7 +27,7 @@ def dry_run(
     skip_not_compiled: bool = False,
     full_refresh: bool = False,
     extra_check_columns_metadata_key: Optional[str] = None,
-    threads: int = 8,
+    threads: Optional[int] = None,
 ) -> int:
     cli_vars_parsed = yaml.safe_load(cli_vars)
     set_flags(
@@ -125,7 +125,7 @@ def run(
         skip_not_compiled,
         full_refresh,
         extra_check_columns_metadata_key,
-        threads or 8,
+        threads,
     )
     if exit_code > 0:
         raise typer.Exit(exit_code)

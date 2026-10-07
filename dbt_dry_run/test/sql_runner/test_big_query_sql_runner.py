@@ -22,6 +22,7 @@ class MockProject:
     def __init__(self) -> None:
         self._connection_mock = MagicMock()
         self.mock_client = MagicMock()
+        self.job_creation_timeout_seconds = None
 
     def get_client(self) -> MagicMock:
         return self.mock_client

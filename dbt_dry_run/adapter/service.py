@@ -1,8 +1,9 @@
 import os
-from argparse import Namespace
-from dataclasses import asdict, dataclass, field
-from typing import Any, Dict, List, Optional
+from dataclasses import dataclass, field
+from typing import Any, Dict, Optional
 
+from dbt_dry_run.adapter.bigquery import create_bigquery_client
+from dbt_dry_run.adapter.profile import load_selected_output
 from dbt_dry_run.adapter.utils import default_profiles_dir
 from dbt_dry_run.models import Manifest
 from google.cloud.bigquery import Client
@@ -16,20 +17,20 @@ class DbtArgs:
     target: Optional[str] = None
     target_path: str = "target"
     vars: Dict[str, Any] = field(default_factory=dict)
-    threads: int = 8
-
-    dependencies: List[str] = field(default_factory=list)
-
-    def to_namespace(self) -> Namespace:
-        self_as_dict = asdict(self)
-        # self_as_dict["vars"] = json.loads(self_as_dict["vars"])
-        return Namespace(**self_as_dict)
+    threads: Optional[int] = None
 
 
 class ProjectService:
     def __init__(self, args: DbtArgs):
         self._args = args
-        self._client = Client()
+        self._output = load_selected_output(
+            args.project_dir,
+            args.profiles_dir,
+            profile_override=args.profile,
+            target_override=args.target,
+            cli_vars=args.vars,
+        )
+        self._client = create_bigquery_client(self._output)
 
     @property
     def manifest_filepath(self) -> str:
@@ -44,7 +45,15 @@ class ProjectService:
 
     @property
     def threads(self) -> int:
-        return self._args.threads
+        return (
+            self._args.threads
+            if self._args.threads is not None
+            else self._output.threads
+        )
 
     def get_client(self) -> Client:
         return self._client
+
+    @property
+    def job_creation_timeout_seconds(self) -> Optional[int]:
+        return self._output.job_creation_timeout_seconds

@@ -47,6 +47,8 @@ you can override these defaults:
 dbt-dry-run default --project-dir /my_org_dbt/ --profiles-dir /my_org_dbt/profiles/ --target local
 ```
 
+The dry runner configures its BigQuery client from `profiles.yml` to match dbt's internal connection behavior.
+
 The full CLI help is shown below, anything prefixed with [dbt] can be used in the same way as a normal dbt parameter:
 
 ```
