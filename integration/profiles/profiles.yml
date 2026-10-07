@@ -5,7 +5,7 @@ default:
     integration-local:
       type: bigquery
       method: oauth
-      project:  "{{ env_var('DBT_PROJECT', 'at-dry-run-integration-dev') }}"
+      project: "{{ env_var('DBT_PROJECT', 'at-dry-run-integration-dev') }}"
       schema: dry_run
       location: EU
       threads: 8
